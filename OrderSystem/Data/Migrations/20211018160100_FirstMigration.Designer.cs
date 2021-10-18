@@ -10,8 +10,8 @@ using OrderSystem.Data;
 namespace OrderSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211018134400_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20211018160100_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,7 +78,8 @@ namespace OrderSystem.Data.Migrations
 
                     b.Property<DateTime>("StartedIn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("GETDATE()");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Status")
                         .IsRequired()

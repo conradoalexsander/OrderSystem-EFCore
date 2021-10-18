@@ -1,15 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using OrderSystem.Domain;
 
 namespace OrderSystem.Data
 {
     public class ApplicationContext: DbContext
     {
-        public DbSet<Order> Orders { get; set; }
+        //public DbSet<Order> Orders { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=OrderSystemIntroductionEF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
+            var connectionStringBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource= "(localdb)\\MSSQLLocalDB",
+                InitialCatalog = "OrderSystem",
+                IntegratedSecurity = true, //use the logged in user's system integrated security
+            };
+
+            optionsBuilder.UseSqlServer(connectionStringBuilder.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

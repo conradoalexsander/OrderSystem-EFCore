@@ -10,7 +10,8 @@ namespace OrderSystem.Data.Configurations
         {
             builder.ToTable("Orders");
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.StartedIn).HasColumnType("GETDATE()").ValueGeneratedOnAdd();
+            builder.Property(p => p.StartedIn).HasDefaultValueSql("GETDATE()").ValueGeneratedOnAdd();
+            builder.Property(p => p.FinishedIn);
             builder.Property(p => p.DeliveryType).HasConversion<string>();
             builder.Property(p => p.Status).HasConversion<string>();
             builder.Property(p => p.Observation).HasColumnType("VARCHAR(512)");

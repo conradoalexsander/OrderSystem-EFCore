@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using OrderSystem.Data;
+using System;
 
 namespace OrderSystem
 {
@@ -6,6 +8,9 @@ namespace OrderSystem
     {
         static void Main(string[] args)
         {
+            var db = new ApplicationContext();
+
+            db.Database.Migrate();
             Console.WriteLine("Hello World!");
         }
     }
