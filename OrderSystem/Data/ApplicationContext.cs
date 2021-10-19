@@ -1,12 +1,17 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OrderSystem.Domain;
 
 namespace OrderSystem.Data
 {
     public class ApplicationContext: DbContext
     {
-        //public DbSet<Order> Orders { get; set; }
+        private static readonly ILoggerFactory _logger = LoggerFactory.Create(p => p.AddConsole());
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,7 +23,10 @@ namespace OrderSystem.Data
                 IntegratedSecurity = true, //use the logged in user's system integrated security
             };
 
-            optionsBuilder.UseSqlServer(connectionStringBuilder.ConnectionString);
+            optionsBuilder
+                .UseLoggerFactory(_logger)
+                .EnableSensitiveDataLogging()
+                .UseSqlServer(connectionStringBuilder.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

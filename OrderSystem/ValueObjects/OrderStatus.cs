@@ -8,7 +8,7 @@ namespace OrderSystem.ValueObjects
 {
     public enum OrderStatus
     {
-        analysis,
+        Analysis,
         Finished,
         Delivered
     }
